@@ -71,10 +71,11 @@ revoke all on public.settings, public.prizes, public.spins, public.pin_attempts 
 
 insert into public.settings (id) values (1) on conflict (id) do nothing;
 
--- v2: the look of the page (luxe / classic / cyber), switched from the Control Room.
+-- v2: the look of the page (luxe / graphite / classic / cyber ...), switched from the Control Room.
+-- Any short lowercase name is accepted, so new looks only need a website update, not SQL.
 alter table public.settings add column if not exists theme text not null default 'luxe';
 alter table public.settings drop constraint if exists settings_theme_check;
-alter table public.settings add constraint settings_theme_check check (theme in ('luxe', 'classic', 'cyber'));
+alter table public.settings add constraint settings_theme_check check (theme ~ '^[a-z]{3,20}$');
 
 -- ---------------------------------------------------------------------
 -- helpers (not callable from the browser)
@@ -290,7 +291,7 @@ begin
     announcement = coalesce(s->>'announcement', ''),
     whatsapp = coalesce(nullif(s->>'whatsapp', ''), whatsapp),
     admin_pin = s->>'adminPin',
-    theme = case when s->>'theme' in ('luxe', 'classic', 'cyber') then s->>'theme' else theme end,
+    theme = case when coalesce(s->>'theme', '') ~ '^[a-z]{3,20}$' then s->>'theme' else theme end,
     updated_at = now()
   where id = 1;
   return jsonb_build_object('ok', true);

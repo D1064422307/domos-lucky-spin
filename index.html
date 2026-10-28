@@ -14,10 +14,10 @@
 <link rel="icon" type="image/png" href="/icons/icon-192.png">
 <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
 <script src="/config.js"></script>
-<script>try{var l=localStorage.getItem("domos_look");if(l==="luxe"||l==="classic"||l==="cyber")document.documentElement.dataset.look=l;}catch(e){}</script>
+<script>try{var l=localStorage.getItem("domos_look");if(/^[a-z]{3,20}$/.test(l||""))document.documentElement.dataset.look=l;}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap">
 <style>
 
 /* Layout: booth kiosk. Customer page (hero + entry card, rewards) and a staff control room behind a PIN. Deliberately one dark look (DOMOS navy + brass). */
@@ -468,6 +468,88 @@ img{max-width:100%}
 :root[data-look="cyber"] .track i{box-shadow:0 0 10px currentColor}
 :root[data-look="cyber"] th{color:var(--brass)}
 :root[data-look="cyber"] .check input{accent-color:var(--brass)}
+/* ================= Look: Graphite ================= */
+:root[data-look="graphite"]{
+  --ink:#161618; --panel:#232326; --panel-2:rgba(12,12,14,.55); --line:rgba(214,183,122,.2);
+  --fg:#f3efe6; --muted:#bdb7ab; --faint:#8b867d;
+  --brass:#d6b77a; --brass-hi:#efdcae; --gold-deep:#a8854b;
+  --sky:#d9cfbd; --ok:#a9d8b6; --warn:#e8c67e; --bad:#e89a8f;
+  --font-display:"Plus Jakarta Sans",ui-sans-serif,system-ui,sans-serif;
+  --font-serif:"Cormorant Garamond","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --r-sm:8px; --r-md:12px; --r-lg:18px;
+}
+:root[data-look="graphite"] body{background:radial-gradient(1100px 620px at 50% -14%,rgba(239,220,174,.13),transparent 62%),repeating-linear-gradient(115deg,rgba(255,255,255,.012) 0 2px,transparent 2px 6px),linear-gradient(180deg,#2c2c30 0%,#222225 42%,#19191b 78%,#141416 100%) fixed}
+:root[data-look="graphite"] body::before{background:#2c2c30}
+:root[data-look="graphite"] header.top{background:rgba(30,30,33,.78);border-bottom:1px solid rgba(214,183,122,.22)}
+:root[data-look="graphite"] .logo{filter:drop-shadow(0 0 1px rgba(255,255,255,.7)) drop-shadow(0 0 10px rgba(214,183,122,.45))}
+:root[data-look="graphite"] .brand small{border-left-color:rgba(214,183,122,.3);color:var(--muted)}
+:root[data-look="graphite"] .brand small b{color:var(--brass-hi)}
+:root[data-look="graphite"] .brand.hint{background:rgba(214,183,122,.1);box-shadow:inset 0 0 0 1px rgba(214,183,122,.45)}
+:root[data-look="graphite"] .eyebrow{color:var(--brass);letter-spacing:.26em}
+:root[data-look="graphite"] .ghost{color:var(--fg);border-color:rgba(214,183,122,.3);background:rgba(255,255,255,.03)}
+:root[data-look="graphite"] .ghost:hover{border-color:var(--brass)}
+:root[data-look="graphite"] .live{color:var(--brass-hi);border-color:rgba(214,183,122,.35);background:rgba(214,183,122,.08)}
+:root[data-look="graphite"] .dot{animation:none;box-shadow:0 0 8px currentColor}
+:root[data-look="graphite"] .hero h1{font-family:var(--font-serif);font-weight:600;letter-spacing:-.01em;line-height:.92;font-size:clamp(52px,7.4vw,104px);color:var(--fg)}
+:root[data-look="graphite"] .hero h1 span{font-style:italic;background:linear-gradient(100deg,#f6e7c1 0%,#d6b77a 38%,#a8854b 62%,#ecd49c 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 2px 14px rgba(214,183,122,.22))}
+:root[data-look="graphite"] .hero .lede{color:var(--muted)}
+:root[data-look="graphite"] .announce{border-left-color:var(--brass)}
+:root[data-look="graphite"] .facts{border-top-color:rgba(214,183,122,.22)}
+:root[data-look="graphite"] .facts b{font-family:var(--font-serif);font-size:34px;font-weight:600;color:var(--fg)}
+:root[data-look="graphite"] .facts b em{color:var(--brass)}
+:root[data-look="graphite"] .sec-head h2,:root[data-look="graphite"] .staff-body h1,:root[data-look="graphite"] .modal h2,:root[data-look="graphite"] .entry h2{font-family:var(--font-serif);font-weight:600;letter-spacing:0}
+:root[data-look="graphite"] .entry h2{font-size:30px}
+:root[data-look="graphite"] .card{position:relative;background:linear-gradient(170deg,rgba(48,48,52,.92),rgba(30,30,33,.95));border:1px solid rgba(214,183,122,.26);box-shadow:0 30px 70px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.06)}
+:root[data-look="graphite"] .card::before{content:"";position:absolute;left:28px;right:28px;top:-1px;height:1px;background:linear-gradient(90deg,transparent,var(--brass-hi),transparent)}
+:root[data-look="graphite"] .field>span{color:var(--sky)}
+:root[data-look="graphite"] .field>span em{color:var(--brass)}
+:root[data-look="graphite"] .input,:root[data-look="graphite"] .phone{background:rgba(10,10,12,.45);border-color:rgba(214,183,122,.2)}
+:root[data-look="graphite"] .input:focus,:root[data-look="graphite"] .phone:focus-within{border-color:rgba(214,183,122,.65);box-shadow:0 0 0 3px rgba(214,183,122,.12)}
+:root[data-look="graphite"] .phone b{color:var(--brass);border-right-color:rgba(214,183,122,.2)}
+:root[data-look="graphite"] .btn{position:relative;overflow:hidden}
+:root[data-look="graphite"] .btn-brass{background:linear-gradient(180deg,#f3e2b8 0%,#d6b77a 55%,#b8924f 100%);color:#1b1712;box-shadow:0 10px 28px rgba(214,183,122,.22),inset 0 1px 0 rgba(255,255,255,.6),inset 0 -1px 0 rgba(0,0,0,.15)}
+:root[data-look="graphite"] .btn-brass:hover:not(:disabled){background:linear-gradient(180deg,#f8ecc9 0%,#e0c48c 55%,#c39c58 100%)}
+:root[data-look="graphite"] .btn-brass::after{content:"";position:absolute;top:0;bottom:0;width:30%;left:-50%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-20deg);animation:sheen 6s ease-in-out infinite}
+:root[data-look="graphite"] .btn-line{border-color:rgba(214,183,122,.3)}
+:root[data-look="graphite"] .btn-ok{background:var(--ok)}
+:root[data-look="graphite"] section.band{border-top-color:rgba(214,183,122,.16)}
+:root[data-look="graphite"] .step,:root[data-look="graphite"] .prize,:root[data-look="graphite"] .stat,:root[data-look="graphite"] .box,:root[data-look="graphite"] .prow{background:linear-gradient(170deg,rgba(46,46,50,.7),rgba(30,30,33,.75));border-color:rgba(214,183,122,.16)}
+:root[data-look="graphite"] .step:hover,:root[data-look="graphite"] .prize:hover{border-color:rgba(214,183,122,.45)}
+:root[data-look="graphite"] .step .n{color:var(--brass)}
+:root[data-look="graphite"] .step h3,:root[data-look="graphite"] .prize h3{font-family:var(--font-display)}
+:root[data-look="graphite"] .prize .cat{color:var(--brass)}
+:root[data-look="graphite"] .prize .ico,:root[data-look="graphite"] .won .ico,:root[data-look="graphite"] .prow .ico{filter:saturate(.75);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
+:root[data-look="graphite"] .b-grand{background:rgba(214,183,122,.14);color:var(--brass-hi);border-color:rgba(214,183,122,.45)}
+:root[data-look="graphite"] .empty{border-color:rgba(214,183,122,.25)}
+:root[data-look="graphite"] footer{border-top-color:rgba(214,183,122,.16)}
+:root[data-look="graphite"] .overlay{background:rgba(10,10,12,.74)}
+:root[data-look="graphite"] .modal .x{border-color:rgba(214,183,122,.3);color:var(--fg)}
+:root[data-look="graphite"] .pill{border-color:rgba(214,183,122,.35);background:rgba(214,183,122,.08);color:var(--brass-hi)}
+:root[data-look="graphite"] .wheel{padding:16px;background:conic-gradient(from 200deg,#f6e7c1,#a8854b 14%,#e9d3a0 26%,#5d5a55 40%,#cfc8bb 52%,#6b675f 64%,#d6b77a 78%,#8d6f40 90%,#f6e7c1);box-shadow:0 0 0 1px rgba(255,255,255,.14),0 30px 80px rgba(0,0,0,.55),0 0 50px rgba(214,183,122,.14)}
+:root[data-look="graphite"] .wheel::after{inset:-14px;border:1px solid rgba(214,183,122,.22)}
+:root[data-look="graphite"] .disc{border:5px solid #18181a;box-shadow:inset 0 0 50px rgba(0,0,0,.35)}
+:root[data-look="graphite"] .disc svg{filter:saturate(.72) brightness(.96)}
+:root[data-look="graphite"] .leds{display:block}
+:root[data-look="graphite"] .led{background:#fff4dc;box-shadow:0 0 5px #f3d9a0,0 0 10px rgba(240,200,130,.7);opacity:.85}
+:root[data-look="graphite"] .wheel.spinning .led{animation:bulb .5s linear infinite}
+:root[data-look="graphite"] .pointer{filter:drop-shadow(0 4px 6px rgba(0,0,0,.5)) drop-shadow(0 0 8px rgba(214,183,122,.45))}
+:root[data-look="graphite"] .hub{border:4px solid var(--brass);background:radial-gradient(circle at 35% 30%,#4a4a50,#1c1c1f 72%);box-shadow:0 8px 24px rgba(0,0,0,.5)}
+:root[data-look="graphite"] .hub b{color:var(--brass-hi)}
+:root[data-look="graphite"] .hub svg{color:var(--brass-hi)}
+:root[data-look="graphite"] .result h2{font-family:var(--font-serif);font-size:34px}
+:root[data-look="graphite"] .result .trophy{border-color:rgba(214,183,122,.45);background:rgba(214,183,122,.1);color:var(--brass-hi)}
+:root[data-look="graphite"] .won{border-color:rgba(214,183,122,.22);background:rgba(255,255,255,.03)}
+:root[data-look="graphite"] .code{border-color:rgba(214,183,122,.4);background:rgba(214,183,122,.06)}
+:root[data-look="graphite"] .code small{color:var(--brass)}
+:root[data-look="graphite"] .code button{border-color:rgba(214,183,122,.35)}
+:root[data-look="graphite"] .grand{border-color:rgba(214,183,122,.55);background:linear-gradient(120deg,#3a3020,#232326)}
+:root[data-look="graphite"] .grand small{color:var(--brass-hi)}
+:root[data-look="graphite"] .grand .ico{background:rgba(214,183,122,.15);color:var(--brass-hi)}
+:root[data-look="graphite"] .toast{background:#2a2a2e;border-color:rgba(214,183,122,.35)}
+:root[data-look="graphite"] .tab[aria-selected="true"]{background:rgba(214,183,122,.12);border-color:rgba(214,183,122,.4);color:var(--fg)}
+:root[data-look="graphite"] .stat b{font-family:var(--font-serif);font-size:40px}
+:root[data-look="graphite"] th{color:var(--brass)}
+:root[data-look="graphite"] .check input{accent-color:var(--brass)}
 </style>
 </head>
 <body>
@@ -1096,7 +1178,7 @@ async function resetCampaign(btn) {
 }
 
 /* ---------- looks (chosen in Control Room → Event settings) ---------- */
-const LOOKS = {luxe:"Luxe · navy & gold with soft glow", classic:"Classic · dark navy & brass", cyber:"Neon · cyberpunk"};
+const LOOKS = {luxe:"Luxe · navy & gold with soft glow", graphite:"Graphite · charcoal grey & champagne gold", classic:"Classic · dark navy & brass", cyber:"Neon · cyberpunk"};
 function applyLook(look) {
   const l = LOOKS[look] ? look : "luxe";
   if (document.documentElement.dataset.look !== l) document.documentElement.dataset.look = l;
