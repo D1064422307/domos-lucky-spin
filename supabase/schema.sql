@@ -71,6 +71,11 @@ revoke all on public.settings, public.prizes, public.spins, public.pin_attempts 
 
 insert into public.settings (id) values (1) on conflict (id) do nothing;
 
+-- v2: the look of the page (luxe / classic / cyber), switched from the Control Room.
+alter table public.settings add column if not exists theme text not null default 'luxe';
+alter table public.settings drop constraint if exists settings_theme_check;
+alter table public.settings add constraint settings_theme_check check (theme in ('luxe', 'classic', 'cyber'));
+
 -- ---------------------------------------------------------------------
 -- helpers (not callable from the browser)
 -- ---------------------------------------------------------------------
@@ -140,7 +145,7 @@ create or replace function public.get_public_config() returns jsonb
 language sql stable security definer set search_path = public as $$
   select jsonb_build_object(
     'settings', jsonb_build_object('boothNumber', s.booth_number, 'dailyLimit', s.daily_limit,
-                                   'announcement', s.announcement, 'whatsapp', s.whatsapp),
+                                   'announcement', s.announcement, 'whatsapp', s.whatsapp, 'theme', s.theme),
     'prizes', public._wheel(),
     'today', public._today())
   from public.settings s where s.id = 1
@@ -235,7 +240,7 @@ begin
   if not public._pin_ok(p_pin) then return jsonb_build_object('error', 'DOMOS: That PIN is incorrect.'); end if;
   return jsonb_build_object(
     'settings', (select jsonb_build_object('boothNumber', booth_number, 'dailyLimit', daily_limit, 'announcement', announcement,
-                                           'whatsapp', whatsapp, 'adminPin', admin_pin) from public.settings where id = 1),
+                                           'whatsapp', whatsapp, 'adminPin', admin_pin, 'theme', theme) from public.settings where id = 1),
     'prizes', (select coalesce(jsonb_agg(public._prize_json(p, true) order by p.sort_order, p.id), '[]'::jsonb) from public.prizes p),
     'spins', (select coalesce(jsonb_agg(public._spin_json(s) order by s.created_at desc), '[]'::jsonb)
               from (select * from public.spins order by created_at desc limit 2000) s),
@@ -284,7 +289,9 @@ begin
     daily_limit = least(20, greatest(1, coalesce((s->>'dailyLimit')::int, daily_limit))),
     announcement = coalesce(s->>'announcement', ''),
     whatsapp = coalesce(nullif(s->>'whatsapp', ''), whatsapp),
-    admin_pin = s->>'adminPin', updated_at = now()
+    admin_pin = s->>'adminPin',
+    theme = case when s->>'theme' in ('luxe', 'classic', 'cyber') then s->>'theme' else theme end,
+    updated_at = now()
   where id = 1;
   return jsonb_build_object('ok', true);
 end $$;

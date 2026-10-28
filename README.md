@@ -5,6 +5,7 @@ DOMOS 展場幸運轉盤。客人輸入手機號就能轉，不用登入。資�
 - **伺服器決定獎品**：Supabase 的 `spin()` 函式負責抽獎、扣庫存、產生兌換碼。網頁只負責把轉盤轉到伺服器給的那一格，所以指針停的格子一定等於出來的獎品。
 - **防超發**：多台 iPad 同時轉，庫存也不會變負數；同一個號碼連按也只算一次。
 - **員工後台**：連點左上角 Logo 5 次，或打開 `你的網址/#staff`，輸入 PIN。可以兌換、查紀錄、導出 CSV、改獎品和機率、改每日次數。
+- **三種風格**：後台 **Event settings → Look** 可以切換 Luxe（預設，深藍金色）、Classic（深色海軍藍＋黃銅）、Neon（Cyberpunk）。選了會先預覽，按 Save 後所有 iPad 一起換。
 
 ## 檔案
 
@@ -22,7 +23,7 @@ DOMOS 展場幸運轉盤。客人輸入手機號就能轉，不用登入。資�
 
 1. 打開 [Supabase](https://supabase.com/dashboard) → 你的專案 → 左邊 **SQL Editor** → **New query**。
 2. 把 `supabase/schema.sql` 全部內容貼上，按 **Run**。看到 `Success. No rows returned` 就完成了。
-3. 這個 SQL 可以重複執行，不會清掉資料。
+3. 這個 SQL 可以重複執行，不會清掉資料。之後更新版本（例如加入主題切換）時，再貼一次執行即可。
 
 ### 2. Vercel：上線
 
