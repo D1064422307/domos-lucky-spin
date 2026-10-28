@@ -1,0 +1,1011 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>DOMOS Lucky Spin</title>
+<meta name="description" content="Spin the DOMOS Smart Home wheel at our exhibition booth and win a smart home reward.">
+<meta name="theme-color" content="#0c2656">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="DOMOS Spin">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" type="image/png" href="/icons/icon-192.png">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<script src="/config.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+html,body{margin:0}
+img{max-width:100%}
+/* Layout: booth kiosk. Customer page (hero + entry card, rewards) and a staff control room behind a PIN. Deliberately one dark look (DOMOS navy + brass). */
+:root{
+  /* Layout: booth kiosk, customer page + staff control room. Luxe-tech: DOMOS navy, brass signal, soft cyan glow. */
+  --ink:#06122c;
+  --panel:#0c1f48;
+  --panel-2:rgba(4,18,48,.62);
+  --line:rgba(70,200,255,.24);
+  --fg:#f3f9ff;
+  --muted:#b0c8ea;
+  --faint:#7c98c6;
+  --brass:#2ee6ff;      /* neon cyan: the signal colour */
+  --brass-hi:#9af4ff;
+  --magenta:#ff3dbb;
+  --violet:#8a5cff;
+  --gold:#ffd25e;
+  --sky:#7fd6ff;
+  --ok:#4dffb0;
+  --warn:#ffd25e;
+  --bad:#ff6b8a;
+  --font-display:"Chakra Petch","Plus Jakarta Sans",ui-sans-serif,system-ui,sans-serif;
+  --font-body:"Plus Jakarta Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --r-sm:8px; --r-md:12px; --r-lg:16px;
+  color-scheme:dark;
+}
+html,body{background:var(--ink);color:var(--fg)}
+body{font-family:var(--font-body);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;
+  background:radial-gradient(1200px 700px at 85% -10%,rgba(60,140,210,.16),transparent 60%),radial-gradient(900px 600px at -10% 110%,rgba(46,230,255,.08),transparent 60%),var(--ink);
+  min-height:100%;}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--ink)}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+h1,h2,h3{font-family:var(--font-body);margin:0;text-wrap:balance;letter-spacing:-.02em}
+p{margin:0}
+.wrap{max-width:1200px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.eyebrow{font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--brass)}
+.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.num{font-variant-numeric:tabular-nums}
+
+/* header */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(7,19,31,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px}
+.brand{display:flex;align-items:center;gap:14px;background:none;border:0;padding:6px 8px;margin-left:-8px;border-radius:12px;-webkit-tap-highlight-color:transparent;user-select:none}
+.brand.hint{background:rgba(46,230,255,.1);box-shadow:inset 0 0 0 1px rgba(46,230,255,.4)}
+.logo{display:block;height:26px;width:auto;max-width:none}
+.wordmark{font-family:var(--font-display);font-weight:800;font-size:24px;letter-spacing:.16em;color:var(--fg)}
+.wordmark i{font-style:normal;color:var(--brass)}
+.brand small{display:block;border-left:1px solid var(--line);padding-left:14px;text-align:left;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);line-height:1.4}
+.brand small b{display:block;color:var(--fg);font-weight:700}
+.toplinks{display:flex;gap:8px;align-items:center}
+.ghost{background:transparent;border:1px solid var(--line);border-radius:999px;padding:9px 16px;font-size:13px;font-weight:700;color:var(--muted)}
+.ghost:hover{color:var(--fg);border-color:rgba(160,200,230,.3)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;padding-block:56px 64px}
+.hero-copy{min-width:0}
+.live{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(111,211,168,.25);background:rgba(111,211,168,.07);color:var(--ok);border-radius:999px;padding:7px 14px;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.dot{width:8px;height:8px;border-radius:50%;background:currentColor;box-shadow:0 0 0 0 currentColor;animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(111,211,168,.6)}70%{box-shadow:0 0 0 8px rgba(111,211,168,0)}100%{box-shadow:0 0 0 0 rgba(111,211,168,0)}}
+.hero h1{margin-top:22px;font-size:clamp(44px,6.6vw,92px);line-height:.95;font-weight:800;letter-spacing:-.055em}
+.hero h1 span{background:linear-gradient(100deg,var(--brass-hi),var(--brass) 45%,#d9925a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .lede{margin-top:24px;max-width:34em;font-size:17px;color:var(--muted)}
+.announce{margin-top:22px;max-width:36em;border-left:2px solid var(--brass);padding:4px 0 4px 14px;font-size:14px;color:var(--fg)}
+.facts{margin-top:34px;padding-top:22px;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;max-width:520px}
+.facts b{display:block;font-size:26px;font-weight:800;font-family:var(--font-display)}
+.facts b em{font-style:normal;color:var(--brass)}
+.facts span{font-size:12px;color:var(--faint);line-height:1.4;display:block;margin-top:2px}
+
+.card{background:linear-gradient(180deg,rgba(16,40,60,.92),rgba(10,28,44,.94));border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:0 30px 80px rgba(0,0,0,.35)}
+.entry{padding:32px;min-width:0}
+.entry h2{margin-top:8px;font-size:26px;font-weight:800}
+.entry .sub{margin-top:8px;color:var(--muted);font-size:14px}
+.field{display:grid;gap:8px;margin-top:18px}
+.field>span{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--sky)}
+.field>span em{font-style:normal;color:var(--brass)}
+.field>span small{font-weight:500;letter-spacing:0;text-transform:none;color:var(--faint);font-size:12px}
+.input{width:100%;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:15px 16px;font-size:16px;outline:none;transition:border-color .2s}
+.input:focus{border-color:rgba(124,198,242,.55)}
+.input::placeholder{color:var(--faint)}
+.phone{display:flex;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.phone:focus-within{border-color:rgba(124,198,242,.55)}
+.phone b{display:grid;place-items:center;padding:0 14px;border-right:1px solid var(--line);color:var(--muted);font-weight:600}
+.phone input{flex:1;min-width:0;background:transparent;border:0;outline:none;padding:15px 16px;font-size:18px;letter-spacing:.04em}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:0;border-radius:14px;padding:16px 22px;font-weight:800;letter-spacing:.06em;font-size:14px;transition:transform .15s,background .2s,opacity .2s}
+.btn:active{transform:scale(.98)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn-brass{background:var(--brass);color:var(--ink);box-shadow:0 12px 30px rgba(46,230,255,.16)}
+.btn-brass:hover:not(:disabled){background:var(--brass-hi)}
+.btn-line{background:transparent;border:1px solid var(--line);color:var(--fg)}
+.btn-line:hover{background:rgba(255,255,255,.05)}
+.btn-ok{background:var(--ok);color:var(--ink)}
+.btn-bad{background:transparent;border:1px solid rgba(240,138,138,.4);color:var(--bad)}
+.btn.block{width:100%}
+.privacy{margin-top:16px;display:flex;gap:8px;align-items:center;font-size:12px;color:var(--faint)}
+.state-note{margin-top:14px;font-size:13px;padding:12px 14px;border-radius:12px;background:rgba(243,194,107,.08);border:1px solid rgba(243,194,107,.25);color:var(--warn)}
+
+section.band{border-top:1px solid var(--line);padding-block:64px}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap}
+.sec-head h2{margin-top:8px;font-size:clamp(26px,3.4vw,40px);font-weight:800}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:28px}
+.step{border:1px solid var(--line);border-radius:var(--r-md);padding:22px;background:rgba(16,40,60,.4)}
+.step .n{font-family:var(--font-mono);font-size:12px;color:var(--brass);font-weight:700}
+.step h3{margin-top:28px;font-size:17px}
+.step p{margin-top:6px;font-size:13px;color:var(--muted)}
+.prizes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:28px}
+.prize{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:var(--r-md);padding:18px;background:rgba(16,40,60,.45);display:flex;gap:14px;min-width:0}
+.prize .ico{flex:none;width:46px;height:46px;border-radius:14px;display:grid;place-items:center;color:#fff}
+.prize .ico svg{width:22px;height:22px}
+.prize .meta{min-width:0}
+.prize .cat{font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--sky)}
+.prize h3{font-size:15px;margin-top:4px;line-height:1.3;letter-spacing:-.01em}
+.prize p{font-size:12px;color:var(--muted);margin-top:4px}
+.badge{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:3px 9px;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.b-grand{background:rgba(46,230,255,.14);color:var(--brass-hi);border:1px solid rgba(46,230,255,.35)}
+.b-won{background:rgba(243,194,107,.1);color:var(--warn);border:1px solid rgba(243,194,107,.25)}
+.b-ok{background:rgba(111,211,168,.1);color:var(--ok);border:1px solid rgba(111,211,168,.25)}
+.b-mute{background:rgba(255,255,255,.05);color:var(--faint);border:1px solid var(--line)}
+.empty{border:1px dashed var(--line);border-radius:var(--r-md);padding:28px;text-align:center;color:var(--muted);font-size:14px}
+footer{border-top:1px solid var(--line);padding-block:28px;color:var(--faint);font-size:12px}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+footer a{color:var(--muted)}
+
+/* overlays */
+.overlay{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:rgba(2,9,15,.78);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  padding:calc(16px + env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));overflow-y:auto}
+.modal{width:100%;max-width:560px;padding:26px;position:relative;margin:auto}
+.modal .x{position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--muted);display:grid;place-items:center}
+.modal .x:hover{color:var(--fg)}
+.modal h2{font-size:26px;font-weight:800}
+
+/* wheel */
+.spin-head{display:flex;justify-content:space-between;align-items:start;gap:12px;padding-right:44px}
+.pill{border:1px solid rgba(124,198,242,.25);background:rgba(124,198,242,.08);color:var(--sky);border-radius:999px;padding:6px 12px;font-size:12px;font-weight:800;white-space:nowrap}
+.wheel-zone{display:grid;justify-items:center;padding-block:34px 6px}
+.wheel{position:relative;width:min(80vw,420px);max-width:100%;aspect-ratio:1;border-radius:50%;padding:10px;
+  background:conic-gradient(from 200deg,var(--brass),#6aa6d6 30%,#0c2235 55%,var(--brass) 100%);box-shadow:0 0 0 1px rgba(255,255,255,.12),0 30px 80px rgba(0,0,0,.5),0 0 70px rgba(60,140,210,.2)}
+.wheel::after{content:"";position:absolute;inset:-14px;border-radius:50%;border:1px dashed rgba(46,230,255,.2);pointer-events:none}
+.disc{width:100%;height:100%;border-radius:50%;overflow:hidden;transform:rotate(0deg);will-change:transform;border:5px solid #0c2133}
+.disc.go{transition:transform var(--spin-ms,5200ms) cubic-bezier(.12,.68,.06,1)}
+.disc svg{display:block;width:100%;height:100%}
+.pointer{position:absolute;left:50%;top:-22px;transform:translateX(-50%);z-index:3;width:38px;height:46px;filter:drop-shadow(0 6px 8px rgba(0,0,0,.45))}
+.pointer.tick{animation:tick .12s ease-out}
+@keyframes tick{50%{transform:translateX(-50%) rotate(-9deg)}}
+.hub{position:absolute;left:50%;top:50%;width:84px;height:84px;transform:translate(-50%,-50%);z-index:2;border-radius:50%;border:4px solid var(--brass);background:radial-gradient(circle at 35% 30%,#2a5f86,#0a2032 72%);display:grid;place-items:center;text-align:center;box-shadow:0 10px 26px rgba(0,0,0,.4)}
+.hub b{font-size:11px;letter-spacing:.2em;font-weight:800}
+.hub svg{width:22px;height:22px;color:var(--brass-hi);display:block;margin:0 auto 2px}
+.spin-btn{margin-top:30px;min-width:240px;border-radius:999px}
+.spin-foot{margin-top:12px;font-size:12px;color:var(--faint);text-align:center}
+
+/* result */
+.result{text-align:center;overflow:hidden}
+.result .trophy{width:68px;height:68px;margin:6px auto 0;border-radius:22px;display:grid;place-items:center;border:1px solid rgba(46,230,255,.35);background:rgba(46,230,255,.1);color:var(--brass-hi)}
+.result .trophy svg{width:32px;height:32px}
+.result h2{margin-top:18px;font-size:30px}
+.won{margin-top:22px;text-align:left;border:1px solid var(--line);border-radius:var(--r-md);background:rgba(255,255,255,.04);padding:18px;display:flex;gap:14px;align-items:center}
+.won .ico{flex:none;width:52px;height:52px;border-radius:16px;display:grid;place-items:center;color:#fff}
+.won .ico svg{width:24px;height:24px}
+.won .meta{min-width:0}
+.won h3{font-size:18px;line-height:1.3}
+.won p{color:var(--muted);font-size:13px;margin-top:4px}
+.code{margin-top:14px;display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid rgba(124,198,242,.25);background:rgba(124,198,242,.06);border-radius:14px;padding:14px 16px;text-align:left}
+.code small{display:block;font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--sky)}
+.code .mono{font-size:22px;font-weight:700;letter-spacing:.12em;margin-top:2px;user-select:all}
+.code button{border:1px solid var(--line);background:transparent;border-radius:10px;padding:8px 12px;font-size:12px;font-weight:700;color:var(--fg)}
+.note{margin-top:14px;font-size:13px;color:var(--muted);text-align:left}
+.row-btns{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
+.row-btns .btn{flex:1 1 180px}
+
+.hist{display:grid;gap:10px;margin-top:18px;max-height:min(420px,55vh);overflow-y:auto}
+.hrow{display:flex;justify-content:space-between;align-items:center;gap:12px;border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:rgba(255,255,255,.03)}
+.hrow .meta{min-width:0}
+.hrow b{display:block;font-size:14px}
+.hrow small{color:var(--faint);font-size:12px}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:80;max-width:min(520px,calc(100% - 32px));padding:13px 18px;border-radius:14px;background:#13314a;border:1px solid var(--line);box-shadow:0 20px 50px rgba(0,0,0,.5);font-size:14px;font-weight:600}
+.toast.bad{border-color:rgba(240,138,138,.45);color:#ffd6d6}
+.toast.ok{border-color:rgba(111,211,168,.45)}
+
+/* confetti + grand banner */
+#confetti{position:fixed;inset:0;z-index:70;pointer-events:none;width:100%;height:100%}
+.grand{position:fixed;left:50%;top:calc(18px + env(safe-area-inset-top,0px));transform:translateX(-50%);z-index:75;width:min(520px,calc(100% - 32px));display:flex;gap:14px;align-items:center;padding:14px 16px;border-radius:18px;border:1px solid rgba(46,230,255,.45);background:linear-gradient(120deg,#2a1d0b,#13283b);box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.grand .ico{flex:none;width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:rgba(46,230,255,.15);color:var(--brass-hi)}
+.grand .ico svg{width:24px;height:24px}
+.grand .meta{min-width:0;flex:1}
+.grand small{font-size:10px;letter-spacing:.2em;font-weight:800;color:var(--brass-hi);text-transform:uppercase}
+.grand b{display:block;font-size:16px}
+
+/* staff control room */
+#staff .bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:14px}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.tab{flex:none;border:1px solid transparent;background:transparent;border-radius:999px;padding:9px 15px;font-size:13px;font-weight:700;color:var(--muted)}
+.tab[aria-selected="true"]{background:rgba(124,198,242,.12);border-color:rgba(124,198,242,.25);color:var(--fg)}
+.staff-body{padding-block:28px 64px}
+.staff-body h1{font-size:clamp(26px,3.4vw,36px);font-weight:800;margin-top:6px}
+.staff-body .lead{color:var(--muted);font-size:14px;margin-top:6px;max-width:60em}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:24px}
+.stat{border:1px solid var(--line);border-radius:var(--r-md);padding:18px;background:rgba(16,40,60,.45)}
+.stat small{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.stat b{display:block;font-size:34px;font-weight:800;margin-top:10px;font-variant-numeric:tabular-nums}
+.stat span{font-size:12px;color:var(--faint)}
+.cols{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;margin-top:16px}
+.box{border:1px solid var(--line);border-radius:var(--r-md);padding:20px;background:rgba(16,40,60,.45);min-width:0}
+.box h3{font-size:15px}
+.box .hint{font-size:12px;color:var(--faint);margin-top:2px}
+.inv{display:grid;gap:12px;margin-top:16px}
+.inv-row{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:12px;align-items:center}
+.sw{width:28px;height:28px;border-radius:8px}
+.inv-row .t{display:flex;justify-content:space-between;gap:10px;font-size:13px;font-weight:700}
+.inv-row .t span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.track{height:6px;border-radius:99px;background:rgba(255,255,255,.07);margin-top:6px;overflow:hidden}
+.track i{display:block;height:100%;border-radius:99px}
+.pct{font-size:12px;color:var(--muted);width:44px;text-align:right}
+.feed{display:grid;margin-top:8px}
+.feed>div{display:flex;justify-content:space-between;gap:10px;align-items:center;padding-block:11px;border-bottom:1px solid var(--line)}
+.feed>div:last-child{border-bottom:0}
+.feed b{font-size:13px;display:block}
+.feed small{font-size:11px;color:var(--faint)}
+.plist{display:grid;gap:12px;margin-top:20px}
+.prow{display:grid;grid-template-columns:48px minmax(0,1fr) auto auto;gap:16px;align-items:center;border:1px solid var(--line);border-radius:var(--r-md);padding:14px 16px;background:rgba(16,40,60,.45)}
+.prow.off{opacity:.55}
+.prow .ico{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;color:#fff}
+.prow .ico svg{width:22px;height:22px}
+.prow h3{font-size:15px;line-height:1.3}
+.prow p{font-size:12px;color:var(--faint);margin-top:2px}
+.kv{display:grid;grid-template-columns:repeat(3,72px);gap:10px;text-align:right}
+.kv small{display:block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.kv b{font-size:17px;font-variant-numeric:tabular-nums}
+.acts{display:flex;gap:6px}
+.sm{padding:9px 13px;font-size:12px;border-radius:10px;letter-spacing:.02em}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.grid2 .full{grid-column:1/-1}
+.lbl{display:grid;gap:6px}
+.lbl>span{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.lbl>span small{letter-spacing:0;text-transform:none;font-weight:500;color:var(--faint)}
+.input.sm-in{padding:11px 12px;font-size:14px}
+.checks{display:flex;gap:22px;flex-wrap:wrap}
+.check{display:flex;gap:10px;align-items:center;font-size:14px;color:var(--fg)}
+.check input{width:20px;height:20px;accent-color:var(--brass)}
+.table-wrap{overflow-x:auto;margin-top:16px;border:1px solid var(--line);border-radius:var(--r-md)}
+table{width:100%;border-collapse:collapse;min-width:760px;font-size:13px}
+th{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);font-weight:800}
+td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;align-items:center}
+.tools .input{max-width:360px}
+.redeem{max-width:620px}
+.redeem .input{font-family:var(--font-mono);font-size:20px;letter-spacing:.16em;text-align:center;text-transform:uppercase}
+.verdict{margin-top:16px;border-radius:var(--r-md);padding:16px;border:1px solid var(--line)}
+.verdict.ok{border-color:rgba(111,211,168,.35);background:rgba(111,211,168,.07)}
+.verdict.bad{border-color:rgba(240,138,138,.35);background:rgba(240,138,138,.07)}
+.verdict.wait{border-color:rgba(243,194,107,.35);background:rgba(243,194,107,.07)}
+.verdict h3{font-size:16px}
+.verdict p{font-size:13px;color:var(--muted);margin-top:4px}
+.danger{margin-top:22px;border-color:rgba(240,138,138,.25)}
+.ro{margin-top:16px;padding:12px 14px;border-radius:12px;border:1px solid rgba(240,138,138,.3);background:rgba(240,138,138,.07);color:#ffd2d2;font-size:13px}
+
+@media (max-width:960px){
+  .hero{grid-template-columns:1fr;gap:36px;padding-block:36px 48px}
+  .prizes{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cols{grid-template-columns:1fr}
+  .prow{grid-template-columns:48px minmax(0,1fr)}
+  .prow .kv,.prow .acts{grid-column:1/-1}
+  .kv{grid-template-columns:repeat(3,minmax(0,1fr));text-align:left}
+}
+@media (max-width:620px){
+  .brand small{display:none}
+  .steps,.prizes,.grid2{grid-template-columns:1fr}
+  .entry,.modal{padding:22px}
+  .facts b{font-size:22px}
+}
+@media (prefers-reduced-motion:reduce){
+  .dot{animation:none}
+  .pointer.tick{animation:none}
+}
+/* ================= Luxe-tech layer =================
+   Brand navy lifted brighter, brass as the premium signal, a soft cyan as the "smart" glow.
+   Background is an architect's blueprint grid: the home being planned. */
+:root{--brass:#f0b45b;--brass-hi:#f8cd84;--cyan:#5fd4ff;--sky:#8fd0f5}
+body{background:radial-gradient(1000px 640px at 88% -12%,rgba(95,212,255,.20),transparent 62%),radial-gradient(900px 600px at -12% 105%,rgba(240,180,91,.12),transparent 60%),linear-gradient(180deg,#10306a 0%,#0c2656 40%,#091d44 75%,#071735 100%) fixed}
+.cyber-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.cyber-bg .blueprint{position:absolute;inset:0;background-image:linear-gradient(rgba(143,208,245,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(143,208,245,.07) 1px,transparent 1px),linear-gradient(rgba(143,208,245,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(143,208,245,.035) 1px,transparent 1px);background-size:120px 120px,120px 120px,24px 24px,24px 24px;-webkit-mask-image:radial-gradient(ellipse at 50% 30%,#000 30%,transparent 85%);mask-image:radial-gradient(ellipse at 50% 30%,#000 30%,transparent 85%)}
+#customer,#staff{position:relative;z-index:1}
+header.top{background:rgba(10,32,74,.66);border-bottom:1px solid rgba(143,208,245,.22)}
+.logo{height:30px;filter:drop-shadow(0 0 1px rgba(255,255,255,.8)) drop-shadow(0 0 10px rgba(95,212,255,.55));animation:glow 4.5s ease-in-out infinite}
+@keyframes glow{0%,100%{filter:drop-shadow(0 0 1px rgba(255,255,255,.8)) drop-shadow(0 0 8px rgba(95,212,255,.45))}50%{filter:drop-shadow(0 0 2px rgba(255,255,255,.95)) drop-shadow(0 0 16px rgba(95,212,255,.75))}}
+.brand small b,.eyebrow,.pill,.btn,.tab,.stat b,.facts b,.step .n,.field>span{font-family:var(--font-display)}
+.eyebrow{color:var(--brass)}
+.ghost{display:inline-flex;align-items:center;gap:8px;color:var(--fg);border-color:rgba(143,208,245,.3);background:rgba(255,255,255,.04)}
+.ghost:hover{border-color:rgba(240,180,91,.6)}
+.ghost svg{width:15px;height:15px}
+.hero h1{color:#fff;text-shadow:0 0 30px rgba(95,212,255,.25)}
+.hero h1 span{background:linear-gradient(100deg,var(--brass-hi),var(--brass) 45%,#e0975a);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none;filter:drop-shadow(0 0 18px rgba(240,180,91,.3))}
+.facts b em{color:var(--brass)}
+.card{position:relative;background:linear-gradient(165deg,rgba(24,62,126,.78),rgba(11,32,74,.9));border:1px solid rgba(143,208,245,.24);box-shadow:0 30px 80px rgba(0,0,0,.32),0 0 50px rgba(95,212,255,.10),inset 0 1px 0 rgba(255,255,255,.08);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.card::before{content:"";position:absolute;left:24px;right:24px;top:-1px;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),var(--brass),transparent);opacity:.9}
+.input,.phone{background:rgba(5,20,50,.5);border-color:rgba(143,208,245,.24)}
+.input:focus,.phone:focus-within{border-color:rgba(95,212,255,.7);box-shadow:0 0 0 3px rgba(95,212,255,.14)}
+.phone b{color:var(--sky)}
+.btn{letter-spacing:.12em;position:relative;overflow:hidden}
+.btn-brass{background:linear-gradient(180deg,#f6c677,#eaa94c);color:#08162e;box-shadow:0 10px 30px rgba(240,180,91,.28),0 0 0 1px rgba(255,220,160,.5) inset}
+.btn-brass:hover:not(:disabled){background:linear-gradient(180deg,#fad596,#f0b45b);box-shadow:0 12px 36px rgba(240,180,91,.4),0 0 0 1px rgba(255,230,180,.7) inset}
+.btn-brass::after{content:"";position:absolute;top:0;bottom:0;width:35%;left:-50%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-20deg);animation:sheen 5s ease-in-out infinite}
+@keyframes sheen{0%,70%{left:-50%}100%{left:130%}}
+.step,.prize,.stat,.box,.prow{background:linear-gradient(165deg,rgba(24,62,126,.5),rgba(11,32,74,.55));border-color:rgba(143,208,245,.2);transition:border-color .2s,transform .2s}
+.step:hover,.prize:hover{border-color:rgba(240,180,91,.45);transform:translateY(-2px)}
+.prize .ico,.won .ico,.prow .ico{box-shadow:inset 0 0 0 1px rgba(255,255,255,.22)}
+.pill{border-color:rgba(143,208,245,.35);background:rgba(95,212,255,.08);color:var(--sky)}
+.overlay{background:rgba(4,14,36,.72)}
+.modal .x{border-color:rgba(143,208,245,.3);color:var(--fg)}
+/* wheel: brass ring with warm smart-light bulbs */
+.wheel-zone{width:100%}
+.wheel{width:min(100%,420px);max-width:none;padding:16px;background:conic-gradient(from 210deg,#f8d290,#c98b3c 18%,#2f6db3 40%,#123a77 55%,#2f6db3 70%,#c98b3c 85%,#f8d290);box-shadow:0 0 0 1px rgba(255,255,255,.18),0 0 40px rgba(95,212,255,.25),0 30px 80px rgba(0,0,0,.45)}
+.wheel::after{inset:-14px;border:1px solid rgba(143,208,245,.22)}
+.disc{border:5px solid #0a1f45}
+.leds{position:absolute;inset:0;z-index:2;pointer-events:none}
+.led{position:absolute;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:#fff6e0;box-shadow:0 0 5px #ffd99a,0 0 10px rgba(255,200,120,.8);opacity:.85}
+.wheel.spinning .led{animation:bulb .5s linear infinite}
+@keyframes bulb{0%,100%{opacity:.25}50%{opacity:1}}
+.pointer{filter:drop-shadow(0 4px 6px rgba(0,0,0,.45)) drop-shadow(0 0 8px rgba(240,180,91,.6))}
+.hub{border:4px solid var(--brass);background:radial-gradient(circle at 35% 30%,#2b64b0,#0a2050 72%);box-shadow:0 8px 24px rgba(0,0,0,.4),0 0 22px rgba(95,212,255,.35)}
+.hub svg{color:var(--brass-hi)}
+.result .trophy{color:var(--brass-hi)}
+.code .mono{color:#fff}
+.toast{background:#123468}
+.tab[aria-selected="true"]{background:rgba(95,212,255,.12);border-color:rgba(95,212,255,.35)}
+th{color:var(--sky)}
+@media (prefers-reduced-motion:reduce){.logo,.btn-brass::after,.wheel.spinning .led{animation:none}}
+</style>
+</head>
+<body>
+
+
+<div class="cyber-bg" aria-hidden="true"><div class="blueprint"></div></div>
+
+<div id="customer">
+  <header class="top">
+    <div class="wrap">
+      <button class="brand" id="brand" type="button" aria-label="DOMOS">
+        <img class="logo" src="/icons/logo-white.png" alt="DOMOS" width="130" height="26">
+        <small><b>Smart Home</b>Experience Fine Living</small>
+      </button>
+      <div class="toplinks">
+        <button class="ghost" id="fsBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg><span id="fsLabel">Full screen</span></button>
+        <button class="ghost" id="openHistory" type="button">My spin history</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="wrap hero">
+      <div class="hero-copy">
+        <span class="live"><span class="dot"></span><span id="booth">Hall 2 · Booth A18</span></span>
+        <h1>Experience<br><span>Fine Living.</span></h1>
+        <p class="lede" id="lede">Spin into a smarter home. Enter your mobile number to spin the DOMOS Smart Home wheel and unlock your exhibition reward.</p>
+        <p class="announce" id="announce" hidden></p>
+        <div class="facts">
+          <div><b>10<em>+</em></b><span>years of smart<br>home expertise</span></div>
+          <div><b>1</b><span>app for your<br>whole home</span></div>
+          <div><b id="prizeCount">6</b><span>rewards on<br>the wheel</span></div>
+        </div>
+      </div>
+
+      <form class="card entry" id="entryForm" novalidate>
+        <p class="eyebrow">Your smart moment</p>
+        <h2>Enter your mobile number</h2>
+        <p class="sub" id="limitCopy">One spin per number each day. Everyone wins a reward.</p>
+        <label class="field">
+          <span>Mobile number <em>*</em></span>
+          <div class="phone"><b>+60</b><input id="phone" inputmode="tel" autocomplete="tel" placeholder="12 345 6789" aria-label="Mobile number"></div>
+        </label>
+        <label class="field">
+          <span>Name <small>(optional)</small></span>
+          <input class="input" id="name" autocomplete="name" placeholder="How should we call you?">
+        </label>
+        <button class="btn btn-brass block" id="checkBtn" type="submit" style="margin-top:22px">CHECK MY LUCK →</button>
+        <p class="privacy"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Your number is used only for this event.</p>
+        <p class="state-note" id="connNote">Connecting to the prize system…</p>
+      </form>
+    </section>
+
+    <section class="band">
+      <div class="wrap">
+        <p class="eyebrow">How it works</p>
+        <div class="sec-head"><h2>A little luck. A smarter home.</h2></div>
+        <div class="steps">
+          <div class="step"><span class="n">STEP 1</span><h3>Enter your number</h3><p>Your Malaysian mobile number activates your entry.</p></div>
+          <div class="step"><span class="n">STEP 2</span><h3>Spin the wheel</h3><p>The pointer stops on your reward. What it points at is what you get.</p></div>
+          <div class="step"><span class="n">STEP 3</span><h3>Claim at the booth</h3><p>Show your redemption code to a DOMOS consultant to collect it.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="rewards">
+      <div class="wrap">
+        <p class="eyebrow">Smart rewards</p>
+        <div class="sec-head"><h2>What could be yours?</h2></div>
+        <div class="prizes" id="prizeGrid"><div class="empty">The rewards will appear here once the prize list loads.</div></div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="wrap"><span>© DOMOS Smart Home Sdn Bhd</span><a href="https://domos.com.my/" target="_blank" rel="noreferrer">domos.com.my</a></div></footer>
+</div>
+
+<div id="staff" hidden>
+  <header class="top">
+    <div class="wrap bar">
+      <div class="brand" style="cursor:default"><img class="logo" src="/icons/logo-white.png" alt="DOMOS" width="130" height="26"><small><b>Control Room</b>Lucky Spin staff</small></div>
+      <button class="ghost" id="exitStaff" type="button">Lock &amp; exit</button>
+    </div>
+    <div class="wrap"><div class="tabs" role="tablist" id="tabs">
+      <button class="tab" role="tab" data-tab="overview" aria-selected="true">Overview</button>
+      <button class="tab" role="tab" data-tab="redeem" aria-selected="false">Redeem</button>
+      <button class="tab" role="tab" data-tab="records" aria-selected="false">Spin records</button>
+      <button class="tab" role="tab" data-tab="prizes" aria-selected="false">Prizes</button>
+      <button class="tab" role="tab" data-tab="event" aria-selected="false">Event settings</button>
+    </div></div>
+  </header>
+  <main class="wrap staff-body" id="staffBody"></main>
+</div>
+
+<div class="overlay" id="ov" hidden></div>
+<canvas id="confetti" hidden></canvas>
+
+<script>
+
+(() => {
+"use strict";
+
+/* ---------- constants ---------- */
+const DEFAULT_SETTINGS = {eventTitle:"DOMOS Smart Home Exhibition Lucky Spin",boothNumber:"Hall 2 · Booth A18",dailyLimit:1,whatsapp:"60165302629",announcement:"",adminPin:"8888"};
+const SPIN_MS = 5200;
+const ICONS = {
+  gift:'<rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/>',
+  switch:'<rect width="20" height="12" x="2" y="6" rx="6"/><circle cx="16" cy="12" r="2"/>',
+  curtain:'<path d="M3 3h18"/><path d="M20 7H8"/><path d="M20 11H8"/><path d="M10 19h10"/><path d="M8 15h12"/><path d="M4 3v14"/><circle cx="4" cy="19" r="2"/>',
+  home:'<path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/>',
+  sparkles:'<path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/>',
+  award:'<circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>',
+  lock:'<rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+  trophy:'<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>'
+};
+const ICON_NAMES = {gift:"Gift",switch:"Switch",curtain:"Curtain",home:"Home",sparkles:"Sparkles",award:"Award",lock:"Lock"};
+const svgIcon = (name, extra="") => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ${extra}>${ICONS[name]||ICONS.gift}</svg>`;
+
+/* ---------- state ---------- */
+const S = {ready:false,pin:null,poll:null,staffPrizes:[],staffSettings:{},settings:{...DEFAULT_SETTINGS},prizes:[],prizesLoaded:false,spins:[],
+  wheel:[],rotation:0,spinning:false,phone:"",name:"",remaining:null,staff:false,tab:"overview",editing:null,confirmDel:null,search:"",redeemFound:null};
+
+/* ---------- helpers ---------- */
+const $ = (id) => document.getElementById(id);
+const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const mytDate = (t = Date.now()) => new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Kuala_Lumpur",year:"numeric",month:"2-digit",day:"2-digit"}).format(t);
+const fmtTime = (t) => t ? new Intl.DateTimeFormat("en-MY",{timeZone:"Asia/Kuala_Lumpur",day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"}).format(t) : "";
+const cleanPhone = (raw) => { let d = String(raw||"").replace(/\D/g, ""); if (d.startsWith("60") && d.length >= 11) d = d.slice(2); return d.replace(/^0+/, ""); };
+const showPhone = (d) => "+60 " + d;
+const maskPhone = (d) => d.length < 7 ? d : `${d.slice(0,3)} •••• ${d.slice(-3)}`;
+const limit = () => Math.max(1, parseInt(S.settings.dailyLimit, 10) || 1);
+let toastTimer;
+function toast(msg, kind = "") {
+  let t = document.querySelector(".toast");
+  if (!t) { t = document.createElement("div"); t.className = "toast"; t.setAttribute("role","status"); document.body.appendChild(t); }
+  t.className = "toast " + kind; t.textContent = msg; t.hidden = false;
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => { t.hidden = true; }, 4200);
+}
+const CFG = window.DOMOS_CONFIG || {};
+class ApiError extends Error {}
+async function api(fn, args = {}) {
+  let r;
+  try {
+    r = await fetch(`${CFG.supabaseUrl}/rest/v1/rpc/${fn}`, {method:"POST", headers:{"apikey":CFG.supabaseKey, "Content-Type":"application/json"}, body:JSON.stringify(args)});
+  } catch { throw new ApiError("Can't reach the prize system. Check the Wi-Fi and try again."); }
+  const text = await r.text(); let body = null; try { body = text ? JSON.parse(text) : null; } catch { body = text; }
+  if (!r.ok) {
+    const msg = body && body.message ? String(body.message) : "";
+    throw new ApiError(msg.startsWith("DOMOS: ") ? msg.slice(7) : "Something went wrong on the server. Try again, or ask staff to check Supabase.");
+  }
+  if (body && typeof body === "object" && body.error) throw new ApiError(String(body.error).replace(/^DOMOS: /, ""));
+  return body;
+}
+const errMsg = (e) => (e && e.message) || "Something went wrong. Try again.";
+
+/* ---------- wheel maths (the fix) ----------
+   Segment i covers [i*slice, (i+1)*slice) degrees clockwise from 12 o'clock.
+   Rotating the disc clockwise by R moves a point at angle a to a+R, so the segment under the
+   top pointer is the one containing -R. We always aim at an ABSOLUTE final angle, so the
+   previous spin's leftover angle can never shift the result. */
+function segmentAtPointer(rotation, count) {
+  const slice = 360 / count;
+  const a = (((-rotation) % 360) + 360) % 360;
+  return Math.floor(a / slice) % count;
+}
+function computeWheelTarget(currentRotation, index, count) {
+  const slice = 360 / count;
+  const jitter = (Math.random() - 0.5) * slice * 0.6;            // land inside the middle 60% of the segment
+  const desired = (((-(index * slice + slice / 2 + jitter)) % 360) + 360) % 360;
+  const current = ((currentRotation % 360) + 360) % 360;
+  const delta = (desired - current + 360) % 360;
+  return currentRotation + 360 * 6 + delta;
+}
+window.__wheelMath = {segmentAtPointer, computeWheelTarget};
+
+/* ---------- prizes ---------- */
+const wheelOf = (list) => list.filter((p) => p.active !== false).sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0) || String(a.id).localeCompare(String(b.id)));
+function autoLabel(p) {
+  if (p.wheelTitle) return {t:p.wheelTitle, s:p.wheelSub || ""};
+  const w = String(p.name||"").trim().split(/\s+/);
+  return {t:w.slice(0,2).join(" ").slice(0,16), s:w.slice(2,4).join(" ").slice(0,18)};
+}
+
+/* ---------- customer rendering ---------- */
+function renderCustomer() {
+  const st = S.settings;
+  $("booth").textContent = st.boothNumber || DEFAULT_SETTINGS.boothNumber;
+  const an = $("announce"); an.textContent = st.announcement || ""; an.hidden = !st.announcement;
+  $("limitCopy").textContent = limit() === 1 ? "One spin per number each day. Everyone wins a reward." : `${limit()} spins per number each day. Everyone wins a reward.`;
+  const wheel = wheelOf(S.prizes);
+  $("prizeCount").textContent = wheel.length;
+  const grid = $("prizeGrid");
+  if (!S.prizesLoaded) return;
+  if (!wheel.length) { grid.innerHTML = '<div class="empty" style="grid-column:1/-1">No rewards are on the wheel yet. Staff can add them in the Control Room.</div>'; return; }
+  grid.innerHTML = wheel.map((p) => `<article class="prize"><div class="ico" style="background:${esc(p.color)}">${svgIcon(p.icon)}</div><div class="meta"><span class="cat">${esc(p.category||"Smart Home")}</span>${p.grand?' <span class="badge b-grand">Grand prize</span>':""}<h3>${esc(p.name)}</h3>${p.subtitle?`<p>${esc(p.subtitle)}</p>`:""}</div></article>`).join("");
+}
+function setConn(text) { const n = $("connNote"); n.textContent = text || ""; n.hidden = !text; }
+
+/* ---------- wheel svg ---------- */
+function wheelSvg(list) {
+  const n = list.length, slice = 360 / n, C = 200, R = 200;
+  const pt = (a, r) => { const t = a * Math.PI / 180; return [C + r * Math.sin(t), C - r * Math.cos(t)]; };
+  let out = `<svg viewBox="0 0 400 400" aria-hidden="true">`;
+  list.forEach((p, i) => {
+    const a0 = i * slice, a1 = (i + 1) * slice, [x0, y0] = pt(a0, R), [x1, y1] = pt(a1, R);
+    const large = slice > 180 ? 1 : 0;
+    const d = n === 1 ? `M${C} 0 A${R} ${R} 0 1 1 ${C-0.01} 0 Z` : `M${C} ${C} L${x0.toFixed(2)} ${y0.toFixed(2)} A${R} ${R} 0 ${large} 1 ${x1.toFixed(2)} ${y1.toFixed(2)} Z`;
+    out += `<path d="${d}" fill="${esc(p.color||"#1d4f73")}"/>`;
+    if (i % 2) out += `<path d="${d}" fill="rgba(0,0,0,.10)"/>`;
+    out += `<path d="M${C} ${C} L${x0.toFixed(2)} ${y0.toFixed(2)}" stroke="rgba(255,255,255,.35)" stroke-width="1.5"/>`;
+    const mid = a0 + slice / 2, lab = autoLabel(p), fs = n > 8 ? 12 : 15, fs2 = n > 8 ? 9.5 : 11;
+    const mono = p.grand ? "#ffe39b" : "#ffffff";
+    out += `<g transform="rotate(${mid.toFixed(3)} ${C} ${C})" style="paint-order:stroke" stroke-linejoin="round">`
+      + `<g transform="translate(${C-11} 34) scale(0.9167)" fill="none" stroke="${mono}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="paint-order:normal">${ICONS[p.icon]||ICONS.gift}</g>`
+      + `<text x="${C}" y="78" text-anchor="middle" font-family="Plus Jakarta Sans, system-ui, sans-serif" font-weight="800" font-size="${fs}" fill="${mono}" stroke="rgba(0,0,0,.35)" stroke-width="3">${esc(lab.t)}</text>`
+      + (lab.s ? `<text x="${C}" y="${78+fs2+4}" text-anchor="middle" font-family="Plus Jakarta Sans, system-ui, sans-serif" font-weight="600" font-size="${fs2}" fill="rgba(255,255,255,.88)" stroke="rgba(0,0,0,.3)" stroke-width="2.5">${esc(lab.s)}</text>` : "")
+      + `</g>`;
+  });
+  out += `<circle cx="${C}" cy="${C}" r="${R-1}" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="2"/></svg>`;
+  return out;
+}
+
+/* ---------- overlays ---------- */
+function openOverlay(html, onClose) {
+  const ov = $("ov"); ov.innerHTML = html; ov.hidden = false; ov._onClose = onClose || null;
+  document.body.style.overflow = "hidden";
+  const f = ov.querySelector("[autofocus]"); if (f) setTimeout(() => f.focus(), 30);
+}
+function closeOverlay() {
+  if (S.spinning) return;
+  const ov = $("ov"); ov.hidden = true; ov.innerHTML = ""; document.body.style.overflow = "";
+  const cb = ov._onClose; ov._onClose = null; if (cb) cb();
+}
+$("ov").addEventListener("click", (e) => { if (e.target.id === "ov" || e.target.closest("[data-close]")) closeOverlay(); });
+document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !$("ov").hidden) closeOverlay(); });
+
+/* ---------- customer flow ---------- */
+$("entryForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  unlockAudio(); requestWakeLock();
+  const phone = cleanPhone($("phone").value);
+  if (phone.length < 8 || phone.length > 11) { toast("Enter a valid Malaysian mobile number, e.g. 12 345 6789.", "bad"); $("phone").focus(); return; }
+  if (!S.ready) { toast("The prize system isn't connected yet. Wait a moment and try again.", "bad"); return; }
+  if (!wheelOf(S.prizes).length) { toast("No rewards are on the wheel yet. Please ask DOMOS staff.", "bad"); return; }
+  S.phone = phone; S.name = $("name").value.trim().slice(0, 60);
+  const btn = $("checkBtn"); btn.disabled = true; btn.textContent = "CHECKING…";
+  try {
+    const st = await api("check_phone", {p_phone: phone});
+    S.phone = st.phone; S.settings.dailyLimit = st.limit;
+    S.remaining = st.remaining;
+    if (S.remaining > 0) openSpin(); else { toast("You've used today's spin for this number. Here is your history.", ""); openHistory(); }
+  } catch (err) { toast(errMsg(err), "bad"); }
+  finally { btn.disabled = false; btn.textContent = "CHECK MY LUCK →"; }
+});
+function ledsHtml() {
+  let h = ""; const n = 24;
+  for (let i = 0; i < n; i++) { const a = i / n * 2 * Math.PI, r = 48.2; h += `<i class="led" style="left:${(50 + r * Math.sin(a)).toFixed(2)}%;top:${(50 - r * Math.cos(a)).toFixed(2)}%;animation-delay:${(i % 2 ? .35 : 0)}s"></i>`; }
+  return h;
+}
+function openSpin() {
+  S.wheel = wheelOf(S.prizes);
+  openOverlay(`<div class="card modal" role="dialog" aria-modal="true" aria-labelledby="spinTitle">
+    <button class="x" data-close aria-label="Close" id="spinClose">✕</button>
+    <div class="spin-head"><div><p class="eyebrow">Good luck, ${esc(S.name || "friend")}</p><h2 id="spinTitle" style="margin-top:6px">Turn the wheel</h2></div>
+    <span class="pill num" id="spinLeft">${S.remaining} spin${S.remaining===1?"":"s"} left</span></div>
+    <div class="wheel-zone">
+      <div class="wheel" id="wheelBox"><div class="leds">${ledsHtml()}</div>
+        <svg class="pointer" id="pointer" viewBox="0 0 38 46"><path d="M19 46 2 8a17 17 0 0 1 34 0Z" fill="#f0b45b"/><circle cx="19" cy="13" r="5" fill="#07131f"/></svg>
+        <div class="disc" id="disc" style="transform:rotate(${S.rotation}deg)">${wheelSvg(S.wheel)}</div>
+        <div class="hub">${svgIcon("sparkles")}<b>DOMOS</b></div>
+      </div>
+      <button class="btn btn-brass spin-btn" id="spinBtn" type="button">SPIN NOW</button>
+      <p class="spin-foot">${esc(showPhone(S.phone))} · the pointer shows your reward</p>
+    </div></div>`);
+  $("spinBtn").addEventListener("click", doSpin);
+}
+
+async function doSpin() {
+  if (S.spinning) return;
+  unlockAudio();
+  const btn = $("spinBtn"); btn.disabled = true; btn.textContent = "YOUR LUCK IS SPINNING…";
+  $("spinClose").hidden = true;
+  S.spinning = true;
+  let outcome;
+  try {
+    // The SERVER picks the prize, takes it out of stock and saves the code. We only animate to it.
+    const res = await api("spin", {p_phone: S.phone, p_name: S.name, p_device: navigator.userAgent.slice(0, 180)});
+    outcome = {wheel: res.wheel, prize: res.prize, rec: {code: res.code, phone: res.phone, ts: res.ts}, left: res.remaining};
+    S.settings.dailyLimit = res.limit;
+    if (!outcome.wheel.some((p) => p.id === outcome.prize.id)) throw new ApiError("The prize list changed. Please tap SPIN NOW again.");
+  } catch (err) {
+    S.spinning = false; btn.disabled = false; btn.textContent = "SPIN NOW"; $("spinClose").hidden = false;
+    toast(errMsg(err), "bad"); return;
+  }
+
+  // Draw the exact prize list this spin was decided on, then aim at the winning segment.
+  S.wheel = outcome.wheel;
+  const disc = $("disc");
+  disc.classList.remove("go"); disc.innerHTML = wheelSvg(S.wheel); disc.style.transform = `rotate(${S.rotation}deg)`;
+  void disc.offsetWidth;
+  const idx = S.wheel.findIndex((p) => p.id === outcome.prize.id);
+  S.rotation = computeWheelTarget(S.rotation, idx, S.wheel.length);
+  disc.style.setProperty("--spin-ms", SPIN_MS + "ms");
+  disc.classList.add("go");
+  disc.style.transform = `rotate(${S.rotation}deg)`;
+  $("wheelBox").classList.add("spinning");
+  startTicks(disc, S.wheel.length);
+  await new Promise((res) => { const done = () => { disc.removeEventListener("transitionend", done); res(); }; disc.addEventListener("transitionend", done); setTimeout(done, SPIN_MS + 400); });
+  stopTicks();
+  $("wheelBox").classList.remove("spinning");
+
+  // Safety check: the segment under the pointer must be the prize that was recorded.
+  const landed = S.wheel[segmentAtPointer(S.rotation, S.wheel.length)];
+  if (!landed || landed.id !== outcome.prize.id) console.error("Wheel/prize mismatch", landed, outcome.prize);
+
+  S.spinning = false; S.remaining = outcome.left;
+  await sleep(450);
+  closeOverlay();
+  showResult(outcome.prize, outcome.rec, outcome.left);
+}
+
+function showResult(prize, rec, left) {
+  openOverlay(`<div class="card modal result" role="dialog" aria-modal="true" aria-labelledby="resTitle">
+    <button class="x" data-close aria-label="Close">✕</button>
+    <div class="trophy">${svgIcon("trophy")}</div>
+    <h2 id="resTitle">Congratulations, you won!</h2>
+    <p style="color:var(--muted);margin-top:6px">${esc(S.name ? S.name + ", your" : "Your")} reward is reserved.</p>
+    <div class="won"><div class="ico" style="background:${esc(prize.color)}">${svgIcon(prize.icon)}</div>
+      <div class="meta"><span class="eyebrow" style="font-size:10px">${esc(prize.category||"Smart Home")}</span><h3>${esc(prize.name)}</h3>${prize.subtitle?`<p>${esc(prize.subtitle)}</p>`:""}</div></div>
+    <div class="code"><div><small>Redemption code</small><div class="mono" id="resCode">${esc(rec.code)}</div></div><button type="button" id="copyCode">Copy</button></div>
+    ${prize.note?`<p class="note">${esc(prize.note)}</p>`:""}
+    <p class="note">Take a screenshot of this code and show it to a DOMOS consultant at the booth.</p>
+    <div class="row-btns"><button class="btn btn-line" type="button" id="resHist">View my history</button><button class="btn btn-brass" type="button" data-close>Done</button></div>
+    <p class="spin-foot">Spins left today for ${esc(showPhone(rec.phone))}: ${left} / ${limit()}</p></div>`, resetEntryIfDone);
+  $("copyCode").addEventListener("click", () => copyText(rec.code, $("resCode")));
+  $("resHist").addEventListener("click", () => { closeOverlay(); openHistory(); });
+  if (prize.grand) celebrate(prize.name);
+  else chime();
+}
+function resetEntryIfDone() { if (S.remaining === 0) { $("phone").value = ""; $("name").value = ""; } }
+async function copyText(text, el) {
+  try { await navigator.clipboard.writeText(text); toast("Code copied.", "ok"); }
+  catch { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); toast("Code selected. Copy it from the menu.", ""); }
+}
+
+async function openHistory() {
+  const phone = S.phone || cleanPhone($("phone").value);
+  if (phone.length < 8) { toast("Enter your mobile number first to see your history.", ""); $("phone").focus(); return; }
+  if (!S.ready) { toast("The prize system isn't connected yet.", "bad"); return; }
+  openOverlay(`<div class="card modal" role="dialog" aria-modal="true" aria-labelledby="hTitle"><button class="x" data-close aria-label="Close">✕</button>
+    <p class="eyebrow">Your activity</p><h2 id="hTitle" style="margin-top:6px">My spin history</h2><p style="color:var(--muted);font-size:13px;margin-top:4px">${esc(showPhone(phone))}</p>
+    <div class="hist" id="histList"><div class="empty">Loading your spins…</div></div></div>`, resetEntryIfDone);
+  try {
+    const rows = (await api("my_history", {p_phone: phone})) || [];
+    const box = $("histList"); if (!box) return;
+    box.innerHTML = rows.length ? rows.map((r) => `<div class="hrow"><div class="meta"><b>${esc(r.prizeName)}</b><small>${esc(fmtTime(r.ts))} · <span class="mono">${esc(r.code)}</span></small></div>${r.status==="redeemed"?'<span class="badge b-ok">Redeemed</span>':'<span class="badge b-won">Ready to claim</span>'}</div>`).join("")
+      : '<div class="empty">No spins yet for this number.</div>';
+  } catch (err) { const box = $("histList"); if (box) box.innerHTML = `<div class="empty">${esc(errMsg(err))}</div>`; }
+}
+$("openHistory").addEventListener("click", openHistory);
+
+/* ---------- sound + celebration ---------- */
+let actx = null, tickRaf = 0;
+function unlockAudio() { try { const A = window.AudioContext || window.webkitAudioContext; if (!A) return; if (!actx) actx = new A(); if (actx.state === "suspended") actx.resume(); } catch {} }
+function blip(freq, dur = .05, vol = .06, type = "triangle", at = 0) {
+  if (!actx) return; try {
+    const t = actx.currentTime + at, o = actx.createOscillator(), g = actx.createGain();
+    o.type = type; o.frequency.setValueAtTime(freq, t); g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+    o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t + dur + .02);
+  } catch {}
+}
+function startTicks(disc, n) {
+  const slice = 360 / n; let last = null; const ptr = $("pointer");
+  const loop = () => {
+    const m = getComputedStyle(disc).transform;
+    if (m && m !== "none") {
+      const v = m.match(/matrix\(([^)]+)\)/); if (v) { const [a, b] = v[1].split(",").map(Number); const ang = Math.atan2(b, a) * 180 / Math.PI;
+        const seg = Math.floor(((((-ang) % 360) + 360) % 360) / slice);
+        if (last !== null && seg !== last) { blip(1400, .03, .05, "square"); if (ptr) { ptr.classList.remove("tick"); void ptr.offsetWidth; ptr.classList.add("tick"); } }
+        last = seg; }
+    }
+    tickRaf = requestAnimationFrame(loop);
+  };
+  tickRaf = requestAnimationFrame(loop);
+}
+function stopTicks() { cancelAnimationFrame(tickRaf); }
+function chime() { [659.25, 880, 1174.66].forEach((f, i) => blip(f, .35, .08, "sine", i * .09)); }
+function celebrate(name) {
+  [523.25, 659.25, 783.99, 1046.5, 1318.5].forEach((f, i) => blip(f, .5, .1, i % 2 ? "sine" : "triangle", i * .09));
+  const banner = document.createElement("div"); banner.className = "grand"; banner.setAttribute("role","status");
+  banner.innerHTML = `<div class="ico">${svgIcon("trophy")}</div><div class="meta"><small>Grand prize unlocked</small><b>${esc(name)}</b></div>`;
+  document.body.appendChild(banner); setTimeout(() => banner.remove(), 9000);
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const cv = $("confetti"), cx = cv.getContext("2d"); cv.hidden = false;
+  const W = cv.width = innerWidth * devicePixelRatio, H = cv.height = innerHeight * devicePixelRatio;
+  const cols = ["#f0b45b","#f7d67c","#7cc6f2","#ffffff","#e86fb2","#6fd3a8"];
+  const ps = Array.from({length:160}, () => ({x:Math.random()*W, y:-Math.random()*H*.6, w:(6+Math.random()*6)*devicePixelRatio, h:(10+Math.random()*8)*devicePixelRatio, vy:(2+Math.random()*3)*devicePixelRatio, vx:(Math.random()-.5)*2*devicePixelRatio, r:Math.random()*6, vr:(Math.random()-.5)*.2, c:cols[Math.floor(Math.random()*cols.length)]}));
+  const t0 = performance.now();
+  const step = (t) => { cx.clearRect(0,0,W,H); ps.forEach((p) => { p.x += p.vx; p.y += p.vy; p.r += p.vr; cx.save(); cx.translate(p.x,p.y); cx.rotate(p.r); cx.fillStyle = p.c; cx.fillRect(-p.w/2,-p.h/2,p.w,p.h); cx.restore(); });
+    if (t - t0 < 5500) requestAnimationFrame(step); else { cx.clearRect(0,0,W,H); cv.hidden = true; } };
+  requestAnimationFrame(step);
+}
+let wakeLock = null;
+async function requestWakeLock() { try { if (!wakeLock && navigator.wakeLock) { wakeLock = await navigator.wakeLock.request("screen"); wakeLock.addEventListener("release", () => { wakeLock = null; }); } } catch {} }
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible" && wakeLock === null && S.phone) requestWakeLock(); });
+
+/* ---------- full screen (covers the Claude toolbar during the event) ---------- */
+(() => {
+  const btn = $("fsBtn"), root = document.documentElement;
+  const req = root.requestFullscreen || root.webkitRequestFullscreen;
+  const fsEl = () => document.fullscreenElement || document.webkitFullscreenElement;
+  if (!req) { btn.hidden = true; return; }
+  const sync = () => { $("fsLabel").textContent = fsEl() ? "Exit full screen" : "Full screen"; };
+  document.addEventListener("fullscreenchange", sync); document.addEventListener("webkitfullscreenchange", sync);
+  btn.addEventListener("click", async () => {
+    try {
+      if (fsEl()) await (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+      else await req.call(root);
+    } catch { toast("Full screen isn't allowed in this browser. Open the page in Safari or Chrome and try again.", "bad"); }
+  });
+})();
+
+/* ---------- staff access ---------- */
+let taps = 0, tapTimer;
+$("brand").addEventListener("click", () => {
+  taps++; clearTimeout(tapTimer); tapTimer = setTimeout(() => { taps = 0; $("brand").classList.remove("hint"); }, 1600);
+  if (taps >= 3) $("brand").classList.add("hint");
+  if (taps >= 5) { taps = 0; $("brand").classList.remove("hint"); openPin(); }
+});
+if (location.hash === "#staff") setTimeout(openPin, 50);
+window.addEventListener("hashchange", () => { if (location.hash === "#staff" && !S.staff) openPin(); });
+function openPin() {
+  openOverlay(`<form class="card modal" id="pinForm" style="max-width:420px" role="dialog" aria-modal="true" aria-labelledby="pinTitle"><button class="x" type="button" data-close aria-label="Close">✕</button>
+    <p class="eyebrow">DOMOS staff only</p><h2 id="pinTitle" style="margin-top:6px">Control Room</h2><p style="color:var(--muted);font-size:14px;margin-top:6px">Manage prizes, stock, daily limits and redemptions.</p>
+    <label class="field"><span>Access PIN</span><input class="input mono" id="pinIn" type="password" inputmode="numeric" autocomplete="off" autofocus style="letter-spacing:.4em;font-size:20px"></label>
+    <button class="btn btn-brass block" type="submit" style="margin-top:18px">ENTER CONTROL ROOM</button></form>`);
+  $("pinForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const pin = $("pinIn").value;
+    try { await api("staff_login", {p_pin: pin}); S.pin = pin; closeOverlay(); enterStaff(); }
+    catch (err) { toast(errMsg(err), "bad"); $("pinIn").select(); }
+  });
+}
+function enterStaff() {
+  S.staff = true; S.staffLoaded = false; S.tab = "overview"; $("customer").hidden = true; $("staff").hidden = false; window.scrollTo(0, 0);
+  renderStaff();
+  refreshStaff();
+  clearInterval(S.poll); S.poll = setInterval(() => { if (!S.editing && document.visibilityState === "visible") refreshStaff(); }, 15000);
+}
+async function refreshStaff() {
+  if (!S.pin) return;
+  try {
+    const d = await api("staff_dashboard", {p_pin: S.pin});
+    S.staffPrizes = d.prizes || []; S.staffSettings = d.settings || {}; S.spins = d.spins || []; S.staffLoaded = true;
+    if (!S.editing) renderStaff();
+  } catch (err) { toast(errMsg(err), "bad"); }
+}
+$("exitStaff").addEventListener("click", () => {
+  S.staff = false; S.editing = null; S.redeemFound = null; $("staff").hidden = true; $("customer").hidden = false;
+  clearInterval(S.poll); S.poll = null; S.pin = null; S.spins = []; loadConfig();
+  if (location.hash === "#staff") history.replaceState(null, "", location.pathname + location.search);
+  window.scrollTo(0, 0);
+});
+$("tabs").addEventListener("click", (e) => { const b = e.target.closest(".tab"); if (!b) return; S.tab = b.dataset.tab; S.editing = null; renderStaff(); });
+
+/* ---------- staff rendering ---------- */
+function renderStaff() {
+  if (!S.staff) return;
+  document.querySelectorAll(".tab").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.tab === S.tab)));
+  const body = $("staffBody");
+  const ro = "";
+  const keep = document.activeElement && document.activeElement.id;
+  if (!S.staffLoaded) { body.innerHTML = '<div class="empty" style="margin-top:24px">Loading the latest numbers…</div>'; return; }
+  if (S.tab === "overview") body.innerHTML = ro + viewOverview();
+  else if (S.tab === "prizes") body.innerHTML = ro + viewPrizes();
+  else if (S.tab === "records") body.innerHTML = ro + viewRecords();
+  else if (S.tab === "redeem") body.innerHTML = ro + viewRedeem();
+  else if (S.tab === "event") body.innerHTML = ro + viewEvent();
+  if (keep && $(keep) && (S.tab === "records" || S.tab === "redeem")) { const el = $(keep); el.focus(); if (el.setSelectionRange && el.value) el.setSelectionRange(el.value.length, el.value.length); }
+}
+function stats() {
+  const today = mytDate();
+  return {today:S.spins.filter((s) => s.date === today).length, total:S.spins.length, people:new Set(S.spins.map((s) => s.phone)).size, redeemed:S.spins.filter((s) => s.status === "redeemed").length, date:today};
+}
+function viewOverview() {
+  const st = stats(), wheel = wheelOf(S.staffPrizes), tw = wheel.filter((p) => Number(p.remaining) > 0).reduce((a, p) => a + Number(p.weight||0), 0);
+  return `<p class="eyebrow">Live · ${esc(st.date)} MYT</p><h1>Exhibition pulse</h1>
+  <div class="stats">
+    <div class="stat"><small>Spins today</small><b style="color:var(--sky)">${st.today}</b><span>${esc(st.date)}</span></div>
+    <div class="stat"><small>Total spins</small><b style="color:var(--brass)">${st.total}</b><span>Whole campaign</span></div>
+    <div class="stat"><small>Visitors</small><b style="color:var(--ok)">${st.people}</b><span>Unique mobile numbers</span></div>
+    <div class="stat"><small>Redeemed</small><b style="color:#dca4ed">${st.redeemed}</b><span>Handed over at booth</span></div>
+  </div>
+  <div class="cols">
+    <div class="box"><h3>Prize stock &amp; current odds</h3><p class="hint">Odds count only prizes that still have stock.</p>
+      <div class="inv">${wheel.length ? wheel.map((p) => { const left = Number(p.remaining)||0, tot = Math.max(1, Number(p.total)||1), odds = tw && left > 0 ? Math.round(Number(p.weight||0) / tw * 100) : 0;
+        return `<div class="inv-row"><span class="sw" style="background:${esc(p.color)}"></span><div style="min-width:0"><div class="t"><span>${esc(p.name)}</span><span class="num">${left}/${tot}</span></div><div class="track"><i style="width:${Math.max(2, left / tot * 100)}%;background:${esc(p.color)}"></i></div></div><span class="pct num">${left > 0 ? odds + "%" : "Out"}</span></div>`; }).join("") : '<div class="empty">No prizes yet. Add them in the Prizes tab.</div>'}</div></div>
+    <div class="box"><h3>Latest wins</h3><p class="hint">Updates live from every device.</p>
+      <div class="feed">${S.spins.slice(0, 7).map((s) => `<div><div style="min-width:0"><b>${esc(s.prizeName)}</b><small>${esc(maskPhone(s.phone))} · ${esc(fmtTime(s.ts))}</small></div>${s.status === "redeemed" ? '<span class="badge b-ok">Redeemed</span>' : '<span class="badge b-won">Won</span>'}</div>`).join("") || '<div class="empty">No spins yet.</div>'}</div></div>
+  </div>`;
+}
+function viewPrizes() {
+  const all = [...S.staffPrizes].sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0)), active = all.filter((p) => p.active !== false), tw = active.reduce((a, p) => a + Number(p.weight||0), 0);
+  if (S.editing) return viewPrizeForm(S.editing);
+  return `<div class="sec-head"><div><p class="eyebrow">Wheel composition</p><h1>Prizes</h1><p class="lead">Weights are relative. If the active prizes add up to 100 and one has weight 35, it has about a 35% chance. A prize with 0 stock stays on the wheel but can't be won.</p></div>
+    <button class="btn btn-brass sm" type="button" data-act="new">+ Add prize</button></div>
+    <div class="plist">${all.map((p) => `<div class="prow ${p.active === false ? "off" : ""}"><div class="ico" style="background:${esc(p.color)}">${svgIcon(p.icon)}</div>
+      <div style="min-width:0"><h3>${esc(p.name)} ${p.grand ? '<span class="badge b-grand">Grand</span>' : ""} ${p.active === false ? '<span class="badge b-mute">Off wheel</span>' : ""}</h3><p>Wheel label: ${esc(autoLabel(p).t)}${autoLabel(p).s ? " / " + esc(autoLabel(p).s) : ""} · Order ${esc(p.sort ?? 0)}</p></div>
+      <div class="kv"><div><small>Chance</small><b>${p.active !== false && tw ? Math.round(Number(p.weight||0) / tw * 100) : 0}%</b></div><div><small>Stock</small><b>${esc(p.remaining)}<span style="font-size:12px;color:var(--faint)">/${esc(p.total)}</span></b></div><div><small>Weight</small><b>${esc(p.weight)}</b></div></div>
+      <div class="acts">${S.confirmDel === p.id ? `<button class="btn btn-bad sm" data-act="del-yes" data-id="${esc(p.id)}">Delete it</button><button class="btn btn-line sm" data-act="del-no">Keep</button>` : `<button class="btn btn-line sm" data-act="edit" data-id="${esc(p.id)}">Edit</button><button class="btn btn-line sm" data-act="del" data-id="${esc(p.id)}" aria-label="Delete ${esc(p.name)}">Delete</button>`}</div></div>`).join("") || '<div class="empty">No prizes yet. Add the first one.</div>'}</div>`;
+}
+function viewPrizeForm(p) {
+  const v = (k, d = "") => esc(p[k] ?? d);
+  return `<p class="eyebrow">${p.id ? "Edit prize" : "New prize"}</p><h1>${p.id ? esc(p.name) : "Add a prize"}</h1>
+  <form id="prizeForm" class="box" style="margin-top:20px"><div class="grid2">
+    <label class="lbl full"><span>Prize name</span><input class="input sm-in" id="f-name" value="${v("name")}" required></label>
+    <label class="lbl"><span>Wheel label, line 1 <small>(short, ~12 letters)</small></span><input class="input sm-in" id="f-wheelTitle" maxlength="18" value="${v("wheelTitle")}"></label>
+    <label class="lbl"><span>Wheel label, line 2 <small>(optional)</small></span><input class="input sm-in" id="f-wheelSub" maxlength="20" value="${v("wheelSub")}"></label>
+    <label class="lbl full"><span>Subtitle <small>(shown in the rewards list)</small></span><input class="input sm-in" id="f-subtitle" value="${v("subtitle")}"></label>
+    <label class="lbl"><span>Category</span><input class="input sm-in" id="f-category" value="${v("category","Smart Home")}"></label>
+    <label class="lbl"><span>Icon</span><select class="input sm-in" id="f-icon">${Object.keys(ICON_NAMES).map((k) => `<option value="${k}" ${p.icon === k ? "selected" : ""}>${ICON_NAMES[k]}</option>`).join("")}</select></label>
+    <label class="lbl"><span>Segment colour</span><input class="input sm-in" id="f-color" type="color" value="${v("color","#0284c7")}" style="height:46px;padding:4px"></label>
+    <label class="lbl"><span>Wheel order</span><input class="input sm-in num" id="f-sort" type="number" value="${v("sort",S.staffPrizes.length+1)}"></label>
+    <label class="lbl"><span>Weight</span><input class="input sm-in num" id="f-weight" type="number" min="0" value="${v("weight",10)}"></label>
+    <label class="lbl"><span>Total quantity</span><input class="input sm-in num" id="f-total" type="number" min="0" value="${v("total",100)}"></label>
+    <label class="lbl"><span>Remaining stock</span><input class="input sm-in num" id="f-remaining" type="number" min="0" value="${v("remaining",100)}"></label>
+    <label class="lbl full"><span>Redemption note <small>(shown on the winner's screen)</small></span><textarea class="input sm-in" id="f-note" rows="2">${v("note")}</textarea></label>
+    <div class="checks full"><label class="check"><input type="checkbox" id="f-active" ${p.active !== false ? "checked" : ""}>On the wheel</label><label class="check"><input type="checkbox" id="f-grand" ${p.grand ? "checked" : ""}>Grand prize (confetti)</label></div>
+  </div><div class="row-btns"><button class="btn btn-line" type="button" data-act="cancel">Cancel</button><button class="btn btn-brass" type="submit">Save prize</button></div></form>`;
+}
+function viewRecords() {
+  const q = S.search.trim().toLowerCase(), rows = q ? S.spins.filter((s) => `${s.phone} ${s.name} ${s.prizeName} ${s.code}`.toLowerCase().includes(q)) : S.spins;
+  return `<p class="eyebrow">Every spin, accounted for</p><h1>Spin records</h1><p class="lead">The latest 1,000 spins from all devices.</p>
+  <div class="tools"><input class="input sm-in" id="searchIn" placeholder="Search phone, name, prize or code" value="${esc(S.search)}"><button class="btn btn-line sm" type="button" data-act="csv">Export CSV</button><span style="color:var(--faint);font-size:13px" class="num">${rows.length} shown</span></div>
+  <div class="table-wrap"><table><thead><tr><th>Time</th><th>Mobile</th><th>Name</th><th>Reward</th><th>Code</th><th>Status</th></tr></thead><tbody>
+  ${rows.map((s) => `<tr><td class="num">${esc(fmtTime(s.ts))}</td><td class="num">${esc(showPhone(s.phone))}</td><td>${esc(s.name || "—")}</td><td>${esc(s.prizeName)}</td><td class="mono">${esc(s.code)}</td><td>${s.status === "redeemed" ? `<span class="badge b-ok">Redeemed</span>` : '<span class="badge b-won">Won</span>'}</td></tr>`).join("") || '<tr><td colspan="6" style="text-align:center;color:var(--faint);padding:30px">No matching spins.</td></tr>'}
+  </tbody></table></div>`;
+}
+function viewRedeem() {
+  const f = S.redeemFound;
+  let verdict = "";
+  if (f && f.justDone) verdict = `<div class="verdict ok"><h3>Redeemed</h3><p>${esc(f.rec.prizeName)} · ${esc(showPhone(f.rec.phone))}. You can hand over the reward.</p></div>`;
+  else if (f && f.missing) verdict = `<div class="verdict bad"><h3>Code not found</h3><p>${esc(f.code)} doesn't match any spin. Check the letters with the customer.</p></div>`;
+  else if (f && f.rec.status === "redeemed") verdict = `<div class="verdict bad"><h3>Already redeemed</h3><p>${esc(f.rec.prizeName)} · ${esc(showPhone(f.rec.phone))}<br>Handed over ${esc(fmtTime(f.rec.redeemedAt))}${f.rec.redeemedBy ? " by " + esc(f.rec.redeemedBy) : ""}. Don't give it again.</p></div>`;
+  else if (f) verdict = `<div class="verdict wait"><h3>${esc(f.rec.prizeName)}</h3><p>${esc(showPhone(f.rec.phone))}${f.rec.name ? " · " + esc(f.rec.name) : ""} · won ${esc(fmtTime(f.rec.ts))}</p>
+      <label class="lbl" style="margin-top:12px"><span>Staff name <small>(optional)</small></span><input class="input sm-in" id="staffName" value="${esc(storeGet("domos_staff") || "")}"></label>
+      <div class="row-btns"><button class="btn btn-ok" type="button" data-act="redeem-yes">Confirm &amp; mark redeemed</button></div></div>`;
+  return `<div class="redeem"><p class="eyebrow">Booth counter</p><h1>Redeem a reward</h1><p class="lead">Type the code from the customer's screen. Each code can be redeemed once.</p>
+  <form id="redeemForm" class="box" style="margin-top:20px"><input class="input" id="codeIn" placeholder="DOMOS-XXXXXX" autocomplete="off" autocapitalize="characters" value="${esc(f ? f.code : "")}"><button class="btn btn-brass block" style="margin-top:12px" type="submit">Check code</button>${verdict}</form></div>`;
+}
+function viewEvent() {
+  const s = S.staffSettings;
+  return `<p class="eyebrow">Campaign controls</p><h1>Event settings</h1><p class="lead">Changes apply to every device straight away.</p>
+  <form id="eventForm" class="box" style="margin-top:20px"><div class="grid2">
+    <label class="lbl full"><span>Booth / location</span><input class="input sm-in" id="e-boothNumber" value="${esc(s.boothNumber)}"></label>
+    <label class="lbl"><span>Spins per number per day</span><input class="input sm-in num" id="e-dailyLimit" type="number" min="1" max="20" value="${esc(s.dailyLimit)}"></label>
+    <label class="lbl"><span>Staff PIN</span><input class="input sm-in mono" id="e-adminPin" inputmode="numeric" value="${esc(s.adminPin)}"></label>
+    <label class="lbl full"><span>Announcement <small>(shown under the headline; leave empty to hide)</small></span><textarea class="input sm-in" id="e-announcement" rows="2">${esc(s.announcement)}</textarea></label>
+  </div><div class="row-btns"><button class="btn btn-brass" type="submit">Save settings</button></div></form>
+  <div class="box danger"><h3>Start the real event</h3><p class="hint">Deletes every spin record and refills each prize's stock to its total. Use this once after testing. Type RESET to confirm.</p>
+    <div class="tools" style="margin-top:12px"><input class="input sm-in" id="resetIn" placeholder="RESET" style="max-width:160px"><button class="btn btn-bad sm" type="button" data-act="reset">Delete records &amp; refill stock</button></div></div>`;
+}
+
+/* ---------- staff actions ---------- */
+const storeGet = (k) => { try { return localStorage.getItem(k); } catch { return null; } };
+const storeSet = (k, v) => { try { localStorage.setItem(k, v); } catch {} };
+$("staffBody").addEventListener("input", (e) => { if (e.target.id === "searchIn") { S.search = e.target.value; renderStaff(); } });
+$("staffBody").addEventListener("click", async (e) => {
+  const b = e.target.closest("[data-act]"); if (!b) return;
+  const act = b.dataset.act, id = b.dataset.id;
+  if (act === "new") { S.editing = {}; renderStaff(); }
+  else if (act === "edit") { S.editing = {...S.staffPrizes.find((p) => p.id === id)}; renderStaff(); }
+  else if (act === "cancel") { S.editing = null; renderStaff(); }
+  else if (act === "del") { S.confirmDel = id; renderStaff(); }
+  else if (act === "del-no") { S.confirmDel = null; renderStaff(); }
+  else if (act === "del-yes") { try { await api("staff_delete_prize", {p_pin: S.pin, p_id: id}); toast("Prize deleted.", "ok"); } catch (err) { toast(errMsg(err), "bad"); } S.confirmDel = null; await refreshStaff(); }
+  else if (act === "csv") exportCsv();
+  else if (act === "redeem-yes") redeemNow();
+  else if (act === "reset") resetCampaign(b);
+});
+$("staffBody").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if (e.target.id === "prizeForm") savePrize();
+  else if (e.target.id === "eventForm") saveEvent();
+  else if (e.target.id === "redeemForm") lookupCode();
+});
+async function savePrize() {
+  const g = (k) => $("f-" + k);
+  const num = (k) => Math.max(0, Math.floor(Number(g(k).value) || 0));
+  const name = g("name").value.trim(); if (!name) { toast("Give the prize a name.", "bad"); return; }
+  const total = num("total"), remaining = Math.min(num("remaining"), total);
+  const data = {name, wheelTitle:g("wheelTitle").value.trim(), wheelSub:g("wheelSub").value.trim(), subtitle:g("subtitle").value.trim(), category:g("category").value.trim() || "Smart Home",
+    icon:g("icon").value, color:g("color").value, sort:Math.floor(Number(g("sort").value) || 0), weight:num("weight"), total, remaining, note:g("note").value.trim(), active:g("active").checked, grand:g("grand").checked};
+  try { await api("staff_save_prize", {p_pin: S.pin, p: {...data, id: S.editing.id || null}}); toast(S.editing.id ? "Prize saved." : "Prize added to the wheel.", "ok"); S.editing = null; await refreshStaff(); loadConfig(); }
+  catch (err) { toast(errMsg(err), "bad"); }
+}
+async function saveEvent() {
+  const pin = $("e-adminPin").value.trim(); if (pin.length < 4) { toast("Use a PIN of at least 4 digits.", "bad"); return; }
+  const data = {...S.staffSettings, boothNumber:$("e-boothNumber").value.trim(), dailyLimit:Math.min(20, Math.max(1, parseInt($("e-dailyLimit").value, 10) || 1)), adminPin:pin, announcement:$("e-announcement").value.trim()};
+  try { await api("staff_save_settings", {p_pin: S.pin, s: data}); if (pin !== S.pin) S.pin = pin; toast("Settings saved.", "ok"); await refreshStaff(); loadConfig(); } catch (err) { toast(errMsg(err), "bad"); }
+}
+async function lookupCode() {
+  let code = $("codeIn").value.trim().toUpperCase().replace(/\s+/g, "");
+  if (!code) return; if (!code.startsWith("DOMOS-")) code = "DOMOS-" + code.replace(/^DOMOS/, "");
+  try { const d = await api("staff_lookup", {p_pin: S.pin, p_code: code}); S.redeemFound = d && !d.missing ? {code, rec:d} : {code, missing:true}; }
+  catch (err) { toast(errMsg(err), "bad"); return; }
+  renderStaff();
+}
+async function redeemNow() {
+  const f = S.redeemFound; if (!f || !f.rec) return;
+  const by = ($("staffName") && $("staffName").value.trim()) || "";
+  if (by) storeSet("domos_staff", by);
+  try {
+    const d = await api("staff_redeem", {p_pin: S.pin, p_code: f.code, p_by: by});
+    if (!d || d.missing) S.redeemFound = {code:f.code, missing:true};
+    else if (d.justRedeemed) { S.redeemFound = {code:f.code, rec:d, justDone:true}; toast("Redeemed. Hand over the reward.", "ok"); }
+    else S.redeemFound = {code:f.code, rec:d};
+    renderStaff(); refreshStaff();
+  } catch (err) { toast(errMsg(err), "bad"); }
+}
+async function exportCsv() {
+  const head = ["time_myt","mobile","name","reward","code","status","redeemed_at","redeemed_by"];
+  const q = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+  const lines = [head.join(",")].concat(S.spins.map((s) => [fmtTime(s.ts), showPhone(s.phone), s.name, s.prizeName, s.code, s.status, s.redeemedAt ? fmtTime(s.redeemedAt) : "", s.redeemedBy].map(q).join(",")));
+  const csv = "﻿" + lines.join("\n");
+  const url = URL.createObjectURL(new Blob([csv], {type:"text/csv;charset=utf-8"}));
+  const a = document.createElement("a"); a.href = url; a.download = `domos-lucky-spin-${mytDate()}.csv`; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+}
+async function resetCampaign(btn) {
+  if ($("resetIn").value.trim().toUpperCase() !== "RESET") { toast("Type RESET in the box to confirm.", "bad"); return; }
+  btn.disabled = true; btn.textContent = "Working…";
+  try {
+    const r = await api("staff_reset", {p_pin: S.pin, p_confirm: "RESET"});
+    toast(`Deleted ${r.deleted} records and refilled all stock.`, "ok"); $("resetIn").value = ""; await refreshStaff(); loadConfig();
+  } catch (err) { toast(errMsg(err), "bad"); }
+  btn.disabled = false; btn.textContent = "Delete records & refill stock";
+}
+
+/* ---------- boot ---------- */
+async function loadConfig() {
+  try {
+    const c = await api("get_public_config");
+    S.settings = {...DEFAULT_SETTINGS, ...c.settings}; S.prizes = c.prizes || []; S.prizesLoaded = true; S.ready = true;
+    setConn(""); renderCustomer();
+  } catch (err) {
+    if (!S.ready) setConn(errMsg(err));
+  }
+}
+renderCustomer();
+if (!CFG.supabaseUrl || !CFG.supabaseKey) setConn("Supabase isn't configured. Fill in config.js.");
+else { loadConfig(); setInterval(() => { if (!S.spinning && !S.staff && document.visibilityState === "visible") loadConfig(); }, 60000); }
+})();
+</script>
+</body>
+</html>
